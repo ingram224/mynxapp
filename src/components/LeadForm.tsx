@@ -58,6 +58,7 @@ export default function LeadForm({ source = "landing" }: { source?: string }) {
         name="email"
         required
         placeholder="ваш@email.ru"
+        suppressHydrationWarning
         className="glass w-full flex-1 px-4 py-3 text-sm text-white placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-primary/60"
       />
       <button type="submit" disabled={status === "loading"} className="btn-primary whitespace-nowrap disabled:opacity-60">
