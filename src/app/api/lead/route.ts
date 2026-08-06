@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getDb } from "@/db";
 import { leads } from "@/db/schema";
+import { sendLeadNotification } from "@/lib/mail";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,8 @@ export async function POST(request: Request) {
   }
 
   const data = parsed.data;
+
+  let savedToDb = false;
   try {
     const db = getDb();
     await db
@@ -46,13 +49,25 @@ export async function POST(request: Request) {
         message: data.message ?? null,
       })
       .onConflictDoNothing({ target: leads.email });
-
-    return NextResponse.json({ ok: true });
+    savedToDb = true;
   } catch (error) {
-    console.error("Failed to save lead:", error);
+    console.error("Failed to save lead to DB (continuing):", error);
+  }
+
+  let sentByMail = false;
+  try {
+    await sendLeadNotification(data);
+    sentByMail = Boolean(process.env.LEAD_NOTIFY_EMAIL && process.env.SMTP_USER && process.env.SMTP_PASS);
+  } catch (mailError) {
+    console.error("Failed to send lead notification:", mailError);
+  }
+
+  if (!savedToDb && !sentByMail) {
     return NextResponse.json(
       { ok: false, error: "Не удалось сохранить заявку. Попробуйте позже." },
       { status: 500 },
     );
   }
+
+  return NextResponse.json({ ok: true });
 }
