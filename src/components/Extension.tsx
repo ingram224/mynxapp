@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Chrome, Zap, WifiOff } from "lucide-react";
+import { Chrome, Zap, WifiOff, ShieldCheck } from "lucide-react";
 
 const points = [
   {
@@ -11,6 +11,11 @@ const points = [
     icon: WifiOff,
     title: "Прямая связь с приложением",
     text: "Расширение общается с Mynx напрямую на вашем компьютере. Ни один байт не уходит в интернет — проверьте сами в мониторе трафика.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Безопасно по устройству",
+    text: "Расширение — лишь мост к приложению: пароли хранятся только в зашифрованном хранилище на вашем ПК, а в браузере появляются лишь на мгновение автозаполнения.",
   },
 ];
 

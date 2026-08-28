@@ -14,7 +14,7 @@ const chips = [
 
 export default function Hero() {
   return (
-    <section id="top" className="relative mx-auto max-w-6xl overflow-hidden px-5 pb-24 pt-16 md:pt-24">
+    <section id="top" className="relative mx-auto max-w-6xl px-5 pb-24 pt-16 md:pt-24">
       <MouseParallax className="relative">
         {/* Параллакс-орбы на фоне */}
         <div data-depth="30" className="absolute -left-24 top-8 h-64 w-64 rounded-full bg-primary/15 blur-3xl" />
